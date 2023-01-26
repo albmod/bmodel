@@ -60,7 +60,17 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <label class="form__label text-uppercase font-size--15 font-w--500">{{trans('site.subdomain')}}</label>
+                            <div class="col-md-6">
+                            <input id="text" type="text" class="form-control   @error('subdomain') is-invalid @enderror" name="subdomain" value="{{ old('subdomain') }}" required placeholder="{{trans('site.enter_subdomain')}}">
+                            @error('subdomain')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                            </div>
+                        </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
