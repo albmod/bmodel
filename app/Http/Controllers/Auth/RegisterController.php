@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenant;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,5 +72,30 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+
+    protected function registered(Request $request, $user)
+    {
+        $tenant=Tenant::create([
+
+            'name' => $request->name,
+        ]);
+
+        $tenant->domains()->create([
+            //'domain'=> $data['subdomain'].'.'.config('tenancy.central_domains')[0],
+            'domain'=> $request->subdomain,
+        ]);
+
+        $user->tenants()->attach($tenant->id);
+
+        Auth::login($user);
+
+        return redirect()->route('home');
+
+        //return view('sellers.home');
+
+        //return redirect('http://' . $request->subdomain . config('session.domain') . RouteServiceProvider::HOME);
+
     }
 }
