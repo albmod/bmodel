@@ -11,6 +11,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    protected $connection = 'mysql';
 
     /**
      * The attributes that are mass assignable.
@@ -41,4 +42,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function tenants()
+    {
+        return $this->belongsToMany(Tenant::class);
+    }
+
+
+
+    public function getTenants(): string
+    {
+        return $this->tenants->pluck('tenancy_db_name');
+
+
+    }
+
+
 }

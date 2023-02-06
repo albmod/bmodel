@@ -154,9 +154,9 @@ return [
     | available to in your application. A sensible default has been set.
     |
     */
-
-    'domain' => env('SESSION_DOMAIN'),
-
+   'domain' => env('SESSION_DOMAIN', null),
+   //'domain' => '.' . env('SESSION_DOMAIN', str_replace("www.", "", $_SERVER['HTTP_HOST'])),
+    //'domain' => '.' . env('SESSION_DOMAIN', 'bmodel.net'),
     /*
     |--------------------------------------------------------------------------
     | HTTPS Only Cookies
@@ -168,8 +168,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
-
+       'secure' => env('SESSION_SECURE_COOKIE'),
     /*
     |--------------------------------------------------------------------------
     | HTTP Access Only

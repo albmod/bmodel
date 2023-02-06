@@ -14,7 +14,16 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                        @if (isTenants()) YesTenants @else NotTenants @endif
+                        <br/>
+                       database: {{ tenant('tenancy_db_name')}}
+                        @if (isNotTenants())
+                            <li>
+                                <a href="{{ route('tenants.change') }}">
+                                    Your Site
+                                </a>
+                            </li>
+                        @endif
                 </div>
             </div>
         </div>
